@@ -10,8 +10,6 @@ setup(name='commons',
       install_requires=[
           'pycryptodome==3.14.1'
       ],
-      entry_points='''
-          [console_scripts]
-      ''',
+      py_modules=["commons"],
       packages=find_packages()
 )
