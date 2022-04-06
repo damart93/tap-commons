@@ -2,7 +2,7 @@
 
 from setuptools import setup, find_packages
 
-setup(name='commons',
+setup(name='inditex_commons',
       version='1.0',
       description='Common libraries for taps/targets',
       long_description_content_type='text/markdown',
@@ -10,6 +10,5 @@ setup(name='commons',
       install_requires=[
           'pycryptodome==3.14.1'
       ],
-      py_modules=["commons"],
       packages=find_packages()
 )
