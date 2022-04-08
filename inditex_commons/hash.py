@@ -30,15 +30,17 @@ def hash_records(records, fields):
 
                 record[field] = hash_string(record[field])
 
-
 def modify_schema_properties(properties, fields):
 
     for field in fields:
         if field in properties:
-            if "string" in properties[field]['type']:
+            if "string" in properties[field].type:
                 pass
             else:
-                properties[field] = {'maxLength': 120, 'type': ['null', 'string']}
+                if "null" in properties[field].type:
+                    properties.type = ['null', 'string']
+                else:
+                    properties.type = ['string']
 
 
 def main():
