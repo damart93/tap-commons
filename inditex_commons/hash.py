@@ -29,18 +29,19 @@ def hash_records(records, fields):
                     value = record[field]
 
                 record[field] = hash_string(record[field])
+                
+                
+def modify_schema_property_type(properties, field):
 
-def modify_schema_properties(properties, fields):
-
-    for field in fields:
-        if field in properties:
-            if "string" in properties[field].type:
-                pass
+    if field in properties:
+        if "string" in properties[field].type:
+            return
+        else:
+            if "null" in properties[field].type:
+                return ['null', 'string']
             else:
-                if "null" in properties[field].type:
-                    properties.type = ['null', 'string']
-                else:
-                    properties.type = ['string']
+                return ['string']
+
 
 
 def main():
