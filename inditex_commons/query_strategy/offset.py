@@ -3,8 +3,7 @@ import os
 import base64
 import json
 from jsonschema import Draft4Validator, FormatChecker
-from . import exceptions
-
+from inditex_commons import exceptions
 
 def hash_string(s):
     if "HASH_SALT" not in os.environ.keys():
