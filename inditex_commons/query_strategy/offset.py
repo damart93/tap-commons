@@ -8,7 +8,7 @@ def get_row_count(schema, table, additional_filters=""):
         query += " WHERE {}".format(additional_filters)
     return query
 
-def get_queries_by_row_number(pk_columns, columns, schema, table, db_type, total_count, max_results, additional_filter=""):
+def get_queries_by_row_number(pk_columns, desired_columns, escaped_columns, schema, table, db_type, total_count, max_results, additional_filter=""):
     if db_type == "ORACLE":
         pk_columns = ",".join(pk_columns)
         if additional_filter != "":
@@ -20,10 +20,10 @@ def get_queries_by_row_number(pk_columns, columns, schema, table, db_type, total
                         " ORDER BY {})"
                         " WHERE RNUM >= {} AND RNUM < {}"
                         " ORDER BY RNUM")
-        return [base_query.format(','.join(columns), ','.join(columns), schema, table, pk_columns, i, i + max_results) for i in range(1, total_count, max_results)]
+        return [base_query.format(','.join(desired_columns), ','.join(escaped_columns), schema, table, pk_columns, i, i + max_results) for i in range(1, total_count, max_results)]
 
 
-def get_queries_by_dense_rank(pk_columns, columns, schema, table, db_type, total_count, max_results, additional_filter=""):
+def get_queries_by_dense_rank(pk_columns, desired_columns, escaped_columns, schema, table, db_type, total_count, max_results, additional_filter=""):
     if db_type == "ORACLE":
         pk_columns = ",".join(pk_columns)
         if additional_filter != "":
@@ -35,7 +35,7 @@ def get_queries_by_dense_rank(pk_columns, columns, schema, table, db_type, total
                         " ORDER BY {})"
                         " WHERE RNUM >= {} AND RNUM < {}"
                         " ORDER BY RNUM")
-        return [base_query.format(columns, pk_columns, schema, table, pk_columns, i, i + max_results) for i in range(1, total_count, max_results)]
+        return [base_query.format(','.join(desired_columns), ','.join(escaped_columns), pk_columns, schema, table, pk_columns, i, i + max_results) for i in range(1, total_count, max_results)]
 
 def get_results_for_queries_number(queries, count):
     return math.ceil(count/queries)
