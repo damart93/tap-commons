@@ -16,7 +16,7 @@ def get_queries_by_row_number(pk_columns, desired_columns, escaped_columns, sche
         base_query = ("SELECT {}"
                         " FROM ( SELECT {}, ROWNUM AS RNUM"
                         " FROM {}.{} T"
-                        f"{additional_filter}"
+                        f" {additional_filter}"
                         " ORDER BY {})"
                         " WHERE RNUM >= {} AND RNUM < {}"
                         " ORDER BY RNUM")
