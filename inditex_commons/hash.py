@@ -11,7 +11,7 @@ def hash_string(s):
         raise exceptions.HashNoSalt("Trying to hash without salt. Please set-up 'HASH_SALT' in environment in order to hash data")
 
     s = s.lower().strip()+os.environ['HASH_SALT']
-    return base64.b64encode(hashlib.sha256((s.lower().strip()+os.environ['HASH_KEY']).encode('utf8')).digest()).decode('utf8')
+    return base64.b64encode(hashlib.sha256((s.lower().strip()+os.environ['HASH_SALT']).encode('utf8')).digest()).decode('utf8')
 
 
 def hash_records(records, fields):
@@ -28,9 +28,9 @@ def hash_records(records, fields):
                 else:
                     value = record[field]
 
-                record[field] = hash_string(record[field])
-                
-                
+                record[field] = hash_string(value)
+
+
 def modify_schema_property_type(properties, field):
 
     if field in properties:
@@ -41,7 +41,6 @@ def modify_schema_property_type(properties, field):
                 return ['null', 'string']
             else:
                 return ['string']
-
 
 
 def main():
